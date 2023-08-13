@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:53:45 by plau              #+#    #+#             */
-/*   Updated: 2023/08/10 20:03:35 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/13 18:50:32 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ int main(int ac, char **av)
 		std::cout << "Error: please provide a file name" << std::endl;
 		return (1);
 	}
-	openFile(av[1]);
-	std::map<std::string, int> Map;
+	
+	openFileAndGetLine(av[1]);
 	
 	return (0);
 }
+
+/* Use std::map because it maintains the order of insertion */

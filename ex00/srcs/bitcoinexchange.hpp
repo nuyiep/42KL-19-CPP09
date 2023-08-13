@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:55:33 by plau              #+#    #+#             */
-/*   Updated: 2023/08/10 20:03:21 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/13 18:46:37 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <sstream>
 
-void	openFile(char *av);
+void	openFileAndGetLine(char *avOne);
+void	printMap(std::map<std::string, int> Map);
 
 
 #endif
