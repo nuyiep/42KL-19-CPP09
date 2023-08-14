@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:55:36 by plau              #+#    #+#             */
-/*   Updated: 2023/08/13 18:56:09 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/14 17:08:43 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,30 @@ void	openFileAndGetLine(char *avOne)
 		std::cerr << "Error opening file" << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	std::map<std::string, int> Map;
+	std::multimap<std::string, double> Map;
 	
 	std::string line;
-	int i = 0;
+	std::getline(inputFile, line);
 	while (std::getline(inputFile, line))
 	{
+		std::cout << BOLD_GREEN << line << RESET << std::endl;
 		std::istringstream iss(line);
-		std::string key;
-		int value;
-		if (i != 0)
-		{
-			if (iss >> key >> value)
-				Map[key] = value;
-			else
-				std::cout << "Failed to parse line " << line << std::endl;
-		}
-		i = i + 1;
+		std::string date;
+		std::string value;
+		char delimiter = '|';
+		if (std::getline(iss, date, delimiter) && std::getline(iss, value, delimiter))
+			Map.insert(std::make_pair(date, std::stod(value)));
+		else
+			std::cerr << RED << "Failed to parse line: " << line << RESET << std::endl;
 	}
+	inputFile.close();
 	printMap(Map);
 }
 
-void	printMap(std::map<std::string, int> Map)
+
+void	printMap(std::multimap<std::string, double> Map)
 {
-	std::map<std::string, int>::iterator it;
+	std::map<std::string, double>::iterator it;
 	if (Map.empty())
 	{
 		std::cout << "map is empty" << std::endl;
@@ -51,6 +51,6 @@ void	printMap(std::map<std::string, int> Map)
 	}
 	for (it = Map.begin(); it != Map.end(); ++it)
 	{
-		std::cout << it->first << ": " << it->second << std::endl;
+		std::cout << BOLD_CYAN << it->first << ": " << it->second << RESET << std::endl;
 	}
 }
