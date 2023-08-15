@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:55:33 by plau              #+#    #+#             */
-/*   Updated: 2023/08/14 16:34:58 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/15 18:05:53 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 #include <cmath>
 #include "color.hpp"
 
-void	openFileAndGetLine(char *avOne);
-void	printMap(std::multimap<std::string, double> Map);
+void							openFileAndGetLine(char *avOne);
+void							printMap(std::map<std::string, double> Map);
+std::map<std::string, double>	parseLine(void);
+void							operation(std::map<std::string, double> Map, char *avOne);
 
 #endif

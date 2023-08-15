@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:53:45 by plau              #+#    #+#             */
-/*   Updated: 2023/08/13 18:50:32 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/15 15:16:07 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ int main(int ac, char **av)
 		return (1);
 	}
 	
-	openFileAndGetLine(av[1]);
-	
+	parseLine();
+	// openFileAndGetLine(av[1]);
+	(void)av;
 	return (0);
 }
 
