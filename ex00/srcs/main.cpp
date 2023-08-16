@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:53:45 by plau              #+#    #+#             */
-/*   Updated: 2023/08/16 13:31:08 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/16 20:38:46 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int main(int ac, char **av)
 		std::cout << "Error: please provide a file name" << std::endl;
 		return (1);
 	}
-	
 	std::map<std::string, double> Map;
 	Map = parseLine();
 	doOperation(Map, av[1]);

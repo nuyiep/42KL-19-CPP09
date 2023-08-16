@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:55:36 by plau              #+#    #+#             */
-/*   Updated: 2023/08/16 20:34:21 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/16 20:46:36 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ std::map<std::string, double>	parseLine(void)
 		exit(EXIT_FAILURE);
 	}
 	std::map<std::string, double> dataMap;
-	
 	std::string line;
 	std::getline(inputFile, line);
 	while (std::getline(inputFile, line))
@@ -37,7 +36,6 @@ std::map<std::string, double>	parseLine(void)
 			std::cerr << RED << "Error: bad input => " << line << RESET << std::endl;
 	}
 	inputFile.close();
-	// printMap(dataMap);
 	return(dataMap);
 }
 
@@ -142,6 +140,16 @@ void	doOperation(std::map<std::string, double> dataMap, char *avOne)
 			if (checkDateFormat(trimmedDate) == 1)
 				continue ;
 			numericResult = std::stod(result);
+			if (numericResult > 1000)
+			{
+				std::cerr << RED << "Error: too large a number." << RESET << std::endl;
+				continue ;
+			}
+			if (numericResult < 0)
+			{
+				std::cerr << RED << "Error: too small a number." << RESET << std::endl;
+				continue ;
+			}
 			it = dataMap.find(trimmedDate);
 			if (it != dataMap.end()) {
 				// std::cout << it->first << ": " << it->second << std::endl;
@@ -152,11 +160,7 @@ void	doOperation(std::map<std::string, double> dataMap, char *avOne)
 				finalResult = numericResult * it->second;
 				// std::cout << it->first << ": " << it->second << std::endl;
 			}
-			if (finalResult > INT_MAX)
-			{
-				std::cerr << RED << "Error: too large a number." << RESET << std::endl;
-				continue ;
-			}
+
 			if (finalResult < 0)
 			{
 				std::cerr << RED << "Error: not a positive number." << RESET << std::endl;
