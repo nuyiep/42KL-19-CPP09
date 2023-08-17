@@ -6,12 +6,22 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:55:33 by plau              #+#    #+#             */
-/*   Updated: 2023/08/16 17:49:33 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/17 14:40:04 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BITCOINEXCHANGE_HPP
 # define BITCOINEXCHANGE_HPP
+
+//Date() - constructor of the Date struct
+//initialize them to -1
+struct Date
+{
+	Date() : year(-1), month(-1), day(-1) {}
+	int year;
+	int month;
+	int day;
+};
 
 #include <iostream>
 #include <fstream>

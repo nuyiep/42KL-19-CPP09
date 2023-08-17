@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:55:36 by plau              #+#    #+#             */
-/*   Updated: 2023/08/16 20:46:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/17 15:19:55 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,33 @@ int checkForValidDate(int year, int month, int day)
 	return (0);
 }
 
-int	checkDateFormat(std::string trimmedDate)
+int checkEarlierDate(std::string trimmedDate, std::map<std::string, double> dataMap, int year, int month, int day)
+{
+	//date before first date in dataMap is invalid
+	std::map<std::string, double>::iterator firstElement = dataMap.begin();
+	int firstDataYear = std::stoi(firstElement->first.substr(0, 4));
+	int firstDataMonth = std::stoi(firstElement->first.substr(5, 2));
+	int firstDataDay = std::stoi(firstElement->first.substr(8, 2));
+	if ((firstDataYear > year)|| (firstDataYear == year && firstDataMonth > month) || (firstDataYear == year && firstDataMonth == month && firstDataDay > day))
+	{
+		std::cerr << RED << "Error: date out of range [earlier than first data]=> " << trimmedDate << RESET << std::endl;
+		return (1);
+	}
+	//date after last date in dataMap is invalid
+	std::map<std::string, double>::iterator lastElement = dataMap.end();
+	lastElement--; 
+	int lastDataYear = std::stoi(lastElement->first.substr(0, 4));
+	int lastDataMonth = std::stoi(lastElement->first.substr(5, 2));
+	int lastDataDay = std::stoi(lastElement->first.substr(8, 2));
+	if ((lastDataYear < year)|| (lastDataYear == year && lastDataMonth < month) || (lastDataYear == year && lastDataMonth == month && lastDataDay < day))	
+	{
+		std::cerr << RED << "Error: date out of range [later than the last data]=> " << trimmedDate << RESET << std::endl;
+		return (1);
+	}
+	return (0);
+}
+
+int	checkDateFormat(std::string trimmedDate, std::map<std::string, double> dataMap)
 {
 	if (trimmedDate.length() != 10)
 	{
@@ -93,19 +119,8 @@ int	checkDateFormat(std::string trimmedDate)
 	int year = std::stoi(trimmedDate.substr(0, 4));
 	int month = std::stoi(trimmedDate.substr(5, 2));
 	int day = std::stoi(trimmedDate.substr(8, 2));
-	//date before 2009-01-02 is invalid
-	if (year <= 2009 || (year == 2009 && (month < 1 || (month == 1 && day < 2))))
-	{
-		std::cerr << RED << "Error: date out of range => " << trimmedDate << RESET << std::endl;
+	if (checkEarlierDate(trimmedDate, dataMap, year, month, day) == 1)
 		return (1);
-	}
-	//date after 2022-03-29 is invalid
-	if (year > 2022 || (year == 2022 && (month > 3 || (month == 3 && day > 29))))
-	{
-		std::cerr << RED << "Error: date out of range => " << trimmedDate << RESET << std::endl;
-		return (1);
-	}
-	//check for invalid date
 	if (checkForValidDate(year, month, day) == 1)
 	{
 		std::cerr << RED << "Error: invalid date => " << trimmedDate << RESET << std::endl;
@@ -137,7 +152,7 @@ void	doOperation(std::map<std::string, double> dataMap, char *avOne)
 			std::string date = line.substr(0, pos); //want to extract a substring from line starting from index 0
 			std::string result = line.substr(pos + delimiter.length()); //starting index is pos+delimiter.length()
 			std::string trimmedDate = trimEnd(date);
-			if (checkDateFormat(trimmedDate) == 1)
+			if (checkDateFormat(trimmedDate, dataMap) == 1)
 				continue ;
 			numericResult = std::stod(result);
 			if (numericResult > 1000)
