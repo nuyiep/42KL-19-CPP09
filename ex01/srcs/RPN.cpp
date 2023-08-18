@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:21:29 by plau              #+#    #+#             */
-/*   Updated: 2023/08/18 15:18:53 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/18 21:58:32 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,48 @@ void	checkAvFormat(char *av)
 
 void	doOperation(char *av)
 {
-	std::stack<int> dataStack;
-	int i = 0;
+	// std::stack<int> dataStack;
+	// int i = 0;
 
-	while (av[i] != '\0')
-	{
-		if (isdigit(av[i]))
-			dataStack.push(av[i]);
-		else
-		{
-			
-		}
-		i++;
-	}
+	// while (av[i] != '\0')
+	// {
+	// 	if (isdigit(av[i]) == 1)
+	// 	{
+	// 		dataStack.push(av[i]);
+	// 		i++;
+	// 	}
+	// 	else if (av[i] == ' ')
+	// 		i++;
+	// 	else if (av[i] == '+' || av[i] == '-' || av[i] == '*' || av[i] == '/'
+	// 	{
+	// 		dataStack.pop(av[i]);
+	// 		if (i == 3)
+	// 			data.
+	// 		i++;
+	// 	})
+	// }
 }
 
-// void	checkNumOfDigitsAndOperations(char *av)
-// {
-// 	int digits = 0;
-// 	int operations = 0;
-
-// 	while (av[i])
-// }
+void	checkNumOfDigitsAndOperations(char *av)
+{
+	int digits = 0;
+	int operations = 0;
+	int i = 0;
+	
+	while (av[i] != '\0')
+	{
+		if (isdigit(av[i]) == 1)
+			digits++;
+		else if (av[i] == '+' || av[i] == '-' || av[i] == '*' || av[i] == '/')
+			operations++;
+		i++;
+	}
+	if (digits - operations != 1)
+	{
+		std::cout << "Error: invalid RPN" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+}
 
 void	checkLastElement(char *av)
 {
