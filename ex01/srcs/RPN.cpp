@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:21:29 by plau              #+#    #+#             */
-/*   Updated: 2023/08/17 20:55:19 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/18 15:18:53 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,50 @@
 
 void	checkAvFormat(char *av)
 {
-	char* trimmedAv;
-	
 	checkInvalidCharacter(av);
 	checkNumbersLessThanTen(av);
- 	trimmedAv = trimSpacesBeforeFirstElement(av);
-	checkSeparatedBySpaces(trimmedAv);
-	checkFirstTwoIsDigit(trimmedAv);
+	checkFirstTwoIsDigit(av);
+	checkSeparatedBySpaces(av);
+	checkLastElement(av);
+	checkNumOfDigitsAndOperations(av);
 }
 
-char*	trimSpacesBeforeFirstElement(char *av)
+void	doOperation(char *av)
 {
+	std::stack<int> dataStack;
 	int i = 0;
-	int j = 0;
-	char* trimmedAv = NULL;
 
 	while (av[i] != '\0')
 	{
-		if (isspace(av[i]) == 1)
-			i++;
+		if (isdigit(av[i]))
+			dataStack.push(av[i]);
 		else
-			break ;
-	}
-	std::cout << "i: " << i << std::endl;
-	while (av[i] != '\0')
-	{
-		std::cout << BOLD_MAGENTA << "av[i]" << av[i] << RESET << std::endl;
-		trimmedAv[j] = av[i];
+		{
+			
+		}
 		i++;
-		j++;
 	}
-	std::cout << "trimmedAv" << trimmedAv << std::endl;
-	return (trimmedAv);
+}
+
+// void	checkNumOfDigitsAndOperations(char *av)
+// {
+// 	int digits = 0;
+// 	int operations = 0;
+
+// 	while (av[i])
+// }
+
+void	checkLastElement(char *av)
+{
+	int len = 0;
+	while (av[len] != 0)
+		len++;
+	len--;
+	if (av[len] != '+' && av[len] != '-' && av[len] != '*' && av[len] != '/')
+	{
+		std::cout << "Error: Last element has to be an operation" << std::endl;
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	checkFirstTwoIsDigit(char *av)
@@ -115,22 +127,4 @@ void	checkSeparatedBySpaces(char *av)
 		}
 		i = i + 2;
 	}
-}
-
-void	parseIntoStack(char *av)
-{
-	std::stack<int> dataStack;
-	int i = 0;
-
-	while (av[i] != '\0')
-	{
-		if (isdigit(av[i]))
-			dataStack.push(av[i]);
-		else
-		{
-			
-		}
-		i++;
-	}
-	
 }

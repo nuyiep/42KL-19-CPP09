@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 15:23:07 by plau              #+#    #+#             */
-/*   Updated: 2023/08/17 20:12:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/18 14:41:44 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int main(int ac, char **av)
 		return (1);
 	}
 	checkAvFormat(av[1]);
-	parseIntoStack(av[1]);
+	doOperation(av[1]);
 	return (0);
 }
