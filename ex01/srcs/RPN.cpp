@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:21:29 by plau              #+#    #+#             */
-/*   Updated: 2023/08/18 21:58:32 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/19 18:22:00 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	checkAvFormat(char *av)
 {
 	checkInvalidCharacter(av);
 	checkNumbersLessThanTen(av);
+	checkExtraSpacesAndTrailingSpaces(av);
 	checkFirstTwoIsDigit(av);
 	checkSeparatedBySpaces(av);
 	checkLastElement(av);
@@ -24,26 +25,101 @@ void	checkAvFormat(char *av)
 
 void	doOperation(char *av)
 {
-	// std::stack<int> dataStack;
-	// int i = 0;
+	std::stack<int> dataStack;
+	int i = 0;
+	long first = 0; 
+	long second = 0; 
+	long result = 0;
 
-	// while (av[i] != '\0')
-	// {
-	// 	if (isdigit(av[i]) == 1)
-	// 	{
-	// 		dataStack.push(av[i]);
-	// 		i++;
-	// 	}
-	// 	else if (av[i] == ' ')
-	// 		i++;
-	// 	else if (av[i] == '+' || av[i] == '-' || av[i] == '*' || av[i] == '/'
-	// 	{
-	// 		dataStack.pop(av[i]);
-	// 		if (i == 3)
-	// 			data.
-	// 		i++;
-	// 	})
-	// }
+	while (av[i] != '\0')
+	{
+		if (isdigit(av[i]) == 1)
+		{
+			dataStack.push(av[i] - '0');
+			i++;
+		}
+		else if (av[i] == ' ')
+			i++;
+		else if (av[i] == '+' || av[i] == '-' || av[i] == '*' || av[i] == '/')
+		{
+			second = dataStack.top();
+			dataStack.pop();
+			first = dataStack.top();
+			dataStack.pop();
+			if (av[i] == '+')
+				result = first + second;
+			else if (av[i] == '-')
+				result = first - second;
+			else if (av[i] == '*')
+				result = first * second;
+			else if (av[i] == '/')
+			{
+				if (second == 0)
+				{
+					std::cout << "Error: cannot be divided by 0" << std::endl;
+					exit(EXIT_FAILURE);
+				}
+				result = first / second;
+			}
+			checkResult(result);
+			dataStack.push(result);
+			i++;
+		}
+	}
+	if (dataStack.size() != 1)
+	{
+		std::cout << "Error: invalid operation" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	std::cout << BOLD_MAGENTA << dataStack.top() << RESET << std::endl;
+}
+
+void	checkResult(long result)
+{
+	if (result < std::numeric_limits<int>::min())
+	{
+		std::cout << "Error: result can't be smaller tha INT_MIN" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	if (result > std::numeric_limits<int>::max())
+	{
+		std::cout << "Error: result can't be larger tha INT_MAX" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	printStack(std::stack<int>dataStack)
+{
+	while (!dataStack.empty())
+	{
+		std::cout << BOLD_MAGENTA << dataStack.top() << RESET << " ";
+		dataStack.pop();
+	}
+	std::cout << std::endl;
+}
+
+void	checkExtraSpacesAndTrailingSpaces(char *av)
+{
+	int	i = 0;
+
+	while (av[i + 1] != '\0')
+	{
+		if (av[i] == ' ' && av[i + 1] == ' ')
+		{
+			std::cout << "Error: cannot have extra spaces" << std::endl;
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+	int len = 0;
+	while (av[len] != '\0')
+		len++;
+	len--;
+	if (av[len] == ' ')
+	{
+		std::cout << "Error: cannot have spaces as the last character" << std::endl;
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	checkNumOfDigitsAndOperations(char *av)
@@ -126,7 +202,7 @@ void	checkNumbersLessThanTen(char *av)
 			result = isdigit(av[i + 1]);
 			if (result == 1)
 			{
-				std::cout << "Error: number cannot be more than ten: " << BOLD_RED << av[i] << av[i + 1] << RESET << std::endl; 
+				std::cout << "Error: number cannot be more than ten" << RESET << std::endl; 
 				exit(EXIT_FAILURE);
 			}
 		}
