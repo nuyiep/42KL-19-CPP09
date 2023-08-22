@@ -28,4 +28,12 @@ A B + :		postfix notation/Reverse Polish Notation
 - 2 * -1 
 - Answer: -2
 
-
+**Ex02- Ford-Johnson algorithm/merge insertion sort**
+1. 	Split the collection in n/2 pairs of 2 elements and order these elements pairwise
+	If the number of elements is odd, the last element of the collection isn't paired with any element
+2.	Recursively sort the pairs by their highest value.
+	If the number of elements is odd, the last element is not considered a highest value
+	and is left at the end of the collection
+	Consider that the highest values form a sorted list that we will call the main chain
+	while the rest of the elements will be known as pend elements
+3.	
