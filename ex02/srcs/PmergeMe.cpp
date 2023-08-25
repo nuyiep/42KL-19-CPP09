@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/08/24 17:06:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/25 15:24:40 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,30 @@ std::vector<int>	parseIntoVector(int ac, char **av, std::vector<int> initialData
 	return(initialData);
 }
 
+void	splitPairsRecursive(std::vector<int>::iterator it, std::vector<int>::iterator ite)
+{
+	if (it == ite)
+		return ; //base case
+	if (*it > *(it + 1))
+		std::swap(*it, *(it + 1));
+	splitPairsRecursive(it + 2, ite);
+}
+
 std::vector<int>	splitIntoTwoPairs(std::vector<int> Data, int numberOfElement)
 {
 	std::vector<int>::iterator it;
-	int temp = 0;
 	std::vector<int>::iterator ite;
 
 	ite = Data.end();
 	if (numberOfElement % 2 != 0)
 		ite = Data.end() - 1;
-
-	for (it = Data.begin(); it != ite; it += 2)
-	{
-		if (*it > *(it + 1))
-		{
-			temp = *it;
-			*it = *(it + 1);
-			*(it + 1) = temp;
-		}
-	}
+	splitPairsRecursive(Data.begin(), ite);
+	/* For loop is good too */
+	// for (it = Data.begin(); it != ite; it += 2)
+	// {
+	// 	if (*it > *(it + 1))
+	// 		std::swap(*it, *(it + 1));
+	// }
 	return (Data);
 }
 
@@ -84,36 +89,43 @@ void	jacobsthalNumbers(std::vector<int> Data)
 	(void)Data;
 }
 
-/* 2 8 4 7 */
-void	compareSecondElement(std::vector<int> Data, int numberOfElement)
+void	compareSecondElementRecursive(std::vector<int>::iterator it, std::vector<int>::iterator ite)
 {
-	std::vector<int>::iterator it;
-	int temp = 0;
-
-	if (numberOfElement % 2 == 0)
+	if (it == ite)
+		return; 
+	if (*it > *(it + 2))
 	{
-		for (it = Data.begin() + 1; it != Data.end() - 1; it += 2)
-		{
-			if (*it > *(it + 2))
-			{
-				std::swap(*it, *(it + 2));
-				std::swap(*(it - 1), *(it + 1));
-			}
-		}
+		std::swap(*it, *(it + 2));
+		std::swap(*(it - 1), *(it + 1));
+		compareSecondElementRecursive(it, ite);
 	}
 	else
+		compareSecondElementRecursive(it + 2, ite);
+}
+
+std::vector<int>	compareSecondElement(std::vector<int> Data, int numberOfElement)
+{
+	std::vector<int>::iterator it;
+	std::vector<int>::iterator ite;
+
+	ite = Data.end();
+	if (numberOfElement % 2 == 0)
+		ite = Data.end() - 1;
+	else
+		ite = Data.end() - 2;
+	for (it = Data.begin() + 1; it != ite; it += 2)
 	{
-		for (it = Data.begin() + 1; it != Data.end() - 2; it += 2)
+		if (*it > *(it + 2))
 		{
-			if (*it > *(it + 2))
-			{
-				std::swap(*it, *(it + 2));
-				std::swap(*(it - 1), *(it + 1));
-			}
+			std::cout << *it << ' ';
+			std::cout << *(it + 2) << ' ';
+			std::swap(*it, *(it + 2));
+			std::swap(*(it - 1), *(it + 1));
+			printVector(Data);
+			it = Data.begin() + 1;
 		}
 	}
-	printVector(Data);
-	(void)temp;
+	return (Data);
 }
 
 void	mergeInsertionSort(int ac, char **av)
@@ -122,7 +134,10 @@ void	mergeInsertionSort(int ac, char **av)
 	initialData = parseIntoVector(ac, av, initialData);
 	int numberOfElement = ac - 1;
 	initialData = splitIntoTwoPairs(initialData, numberOfElement);
+	std::cout << "step 1: splitIntoTwoPairs" << std::endl;
 	printVector(initialData);
-	compareSecondElement(initialData, numberOfElement);
+	initialData = compareSecondElement(initialData, numberOfElement);
+	std::cout << "step 2: compareSecondElement" << std::endl;
+	printVector(initialData);
 	jacobsthalNumbers(initialData);
 }
