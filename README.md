@@ -40,7 +40,7 @@ A B + :		postfix notation/Reverse Polish Notation
 
 **Ex02- Jacobsthal number**
 	0, 1, 1, 3, 5, 11, 21, 43, 85
-	I am starting from 1, 3, 5, 11, 21, 43, 85
+	I am starting from 1, 1, 3, 5, 11, 21, 43, 85
 
 	1 + (1x2) = 3
 	3 + (1x2) = 5

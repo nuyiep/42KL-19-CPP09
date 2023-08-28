@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/08/28 17:11:10 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/28 18:05:41 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ std::vector<int>	stepTwocompareSecondElement(std::vector<int> Data, int numberOf
 }
 
 /* Generate the jacob number based on the size of the pend */
-/* My jacob index starts from 1, 1, 3, 5, 11, 21 */
+/* My jacob number starts from 1, 1, 3, 5, 11, 21 */
 std::vector<int> getJacobsthalNumbers(std::vector<int> pend)
 {
 	std::vector<int> jacobIndex;
@@ -143,7 +143,32 @@ std::vector<int> getJacobsthalNumbers(std::vector<int> pend)
 	return (jacobIndex);
 }
 
+/* insert b1 before a1 first */
+/* Insertion sort using Jacobsthal number */
+std::vector<int>	insertionSort(std::vector<int> main, std::vector<int> pend, std::vector<int> jacobIndex)
+{
+	int i = 2;
+	int size = pend.size();
+	
+	main.insert(main.begin(), pend[0]);
+	std::cout << "Jacob index 2: " << jacobIndex[i] << std::endl;
+	while (jacobIndex[i] < size)
+	{
+		std::cout << "Jacob index i: " << jacobIndex[i] << std::endl;
+		i++;
+	}
+	std::cout << "Main: ";
+	printVector(main);
+	std::cout << "Pend: ";
+	printVector(pend);
+	std::cout << "Jacob number: ";
+	printVector(jacobIndex);
+	return (main);
+}
+
 /* Step 3 create main chain and pend */
+/* main chain: a1 a2 a3 - sorted */
+/* pend: 	   b1, b2, b3 - unsorted */
 void	stepThreeCreateMainAndPend(std::vector<int> Data, int numberOfElement)
 {
 	std::vector<int> main;
@@ -162,12 +187,10 @@ void	stepThreeCreateMainAndPend(std::vector<int> Data, int numberOfElement)
 		main.push_back(*it);
 		pend.push_back(*(it - 1));
 	}
-	std::cout << "Main: ";
-	printVector(main);
-	std::cout << "Pend: ";
-	printVector(pend);
+
 	jacobIndex = getJacobsthalNumbers(pend);
-	printVector(jacobIndex);
+	main = insertionSort(main, pend, jacobIndex);
+
 }
 
 void	mergeInsertionSort(int ac, char **av)
