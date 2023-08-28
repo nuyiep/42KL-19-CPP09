@@ -37,3 +37,14 @@ A B + :		postfix notation/Reverse Polish Notation
 	Consider that the highest values form a sorted list that we will call the main chain
 	while the rest of the elements will be known as pend elements
 3.	
+
+**Ex02- Jacobsthal number**
+	0, 1, 1, 3, 5, 11, 21, 43, 85
+	I am starting from 1, 3, 5, 11, 21, 43, 85
+
+	1 + (1x2) = 3
+	3 + (1x2) = 5
+	5 + (3x2) = 11
+	11 + (5x2) = 21
+
+	
