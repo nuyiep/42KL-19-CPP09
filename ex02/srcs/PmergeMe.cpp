@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/08/25 15:24:40 by plau             ###   ########.fr       */
+/*   Updated: 2023/08/28 14:38:30 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,12 @@ std::vector<int>	compareSecondElement(std::vector<int> Data, int numberOfElement
 	{
 		if (*it > *(it + 2))
 		{
-			std::cout << *it << ' ';
-			std::cout << *(it + 2) << ' ';
+			// std::cout << *it << ' ';
+			// std::cout << *(it + 2) << ' ';
 			std::swap(*it, *(it + 2));
 			std::swap(*(it - 1), *(it + 1));
-			printVector(Data);
-			it = Data.begin() + 1;
+			// printVector(Data);
+			it = Data.begin() + 1 - 2;
 		}
 	}
 	return (Data);
@@ -136,8 +136,9 @@ void	mergeInsertionSort(int ac, char **av)
 	initialData = splitIntoTwoPairs(initialData, numberOfElement);
 	std::cout << "step 1: splitIntoTwoPairs" << std::endl;
 	printVector(initialData);
-	initialData = compareSecondElement(initialData, numberOfElement);
 	std::cout << "step 2: compareSecondElement" << std::endl;
+	initialData = compareSecondElement(initialData, numberOfElement);
+	std::cout << "step 3: create main and pend" << std::endl;
 	printVector(initialData);
 	jacobsthalNumbers(initialData);
 }
