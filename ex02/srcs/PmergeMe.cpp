@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/05 17:42:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/05 18:30:07 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	printVector(std::vector<int> Data)
 		std::cout << *it << ' ';
 		++it;
 	}
+	checkIfSorted(Data);
 	std::cout << RESET << std::endl;
 }
 
@@ -154,6 +155,11 @@ std::vector<int> insertNumIntoMain(std::vector<int> updatedMain, int num)
 	int mid = (left + right) / 2;
 	int index = -1;
 
+	if (num <= updatedMain[0])
+	{
+		updatedMain.insert(updatedMain.begin(), num);
+		return (updatedMain);
+	}
 	while (left <= right)
 	{
 		if (num < updatedMain[mid])
@@ -167,10 +173,14 @@ std::vector<int> insertNumIntoMain(std::vector<int> updatedMain, int num)
 			mid = (left + right) / 2;
 		}
 		else if (num == updatedMain[mid])
+		{
 			index = mid + 1;
+			std::cout <<  BOLD_RED << "index here might be wrong" << index << RESET << std::endl;
+		}
 	}
 	index = mid + 1;
-	
+	std::cout << "Num: " << num << std::endl;
+	std::cout << "Index: " << index << std::endl;
 	updatedMain.insert(updatedMain.begin() + index, num);
 	printVector(updatedMain);
 	std::cout << std::endl << BOLD_GREEN << "End Focus here first" << RESET << std::endl;
