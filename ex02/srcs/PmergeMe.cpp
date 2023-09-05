@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/05 16:52:17 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/05 17:42:13 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,10 @@ std::vector<int> getJacobsthalNumbers(std::vector<int> pend)
 		
 	jacobIndex.push_back(1);
 	jacobIndex.push_back(1);
-	std::cout << "size of pend: " << sizeOfPend << std::endl;
-	while (result < sizeOfPend)
+	while (result <= sizeOfPend)
 	{
 		result = result + ((jacobIndex[i - 2]) * 2);
-		if (result < sizeOfPend)
+		if (result <= sizeOfPend)
 			jacobIndex.push_back(result);
 		i++;
 	}
@@ -196,6 +195,7 @@ std::vector<int>	insertionSort(std::vector<int> originalMain, std::vector<int> p
 	printVector(updatedMain);
 	std::cout << BOLD_CYAN << "Pend: " << RESET;
 	printVector(pend);
+	std::cout << BOLD_RED << "Pend size: " << pend.size() << RESET << std::endl;
 	std::cout << std::endl << "Jacob number: ";
 	printVector(jacobIndex);
 	while (i < jacobVectorSize)
@@ -212,6 +212,7 @@ std::vector<int>	insertionSort(std::vector<int> originalMain, std::vector<int> p
 		{
 			std::cout << "k: " << k << std::endl;
 			std::cout << "pend[k]: " << pend[k - 1] << std::endl;
+			updatedMain = insertNumIntoMain(updatedMain, pend[k - 1]);
 			k--;
 		}
 		std::cout << BOLD_CYAN << "Ori main: " << RESET;
@@ -221,6 +222,17 @@ std::vector<int>	insertionSort(std::vector<int> originalMain, std::vector<int> p
 		std::cout << BOLD_CYAN << "Pend: " << RESET;
 		printVector(pend);
 		i++;
+	}
+	// sortPendElementAfterLastJacobNum();
+	int lastJacobNum = jacobIndex[jacobVectorSize - 1];
+	int z = pend.size();
+	if (z > lastJacobNum)
+	{
+		while (z > lastJacobNum)
+		{
+			updatedMain = insertNumIntoMain(updatedMain, pend[z - 1]);
+			z--;
+		}
 	}
 	std::cout << "Before the end of insertion sort" << std::endl;
 	return (updatedMain);
