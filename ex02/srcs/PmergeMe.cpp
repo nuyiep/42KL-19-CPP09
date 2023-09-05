@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/05 18:30:07 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/05 19:17:57 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	printVector(std::vector<int> Data)
 		std::cout << *it << ' ';
 		++it;
 	}
-	checkIfSorted(Data);
 	std::cout << RESET << std::endl;
 }
 
@@ -148,8 +147,6 @@ std::vector<int> getJacobsthalNumbers(std::vector<int> pend)
 
 std::vector<int> insertNumIntoMain(std::vector<int> updatedMain, int num)
 {
-	std::cout << std::endl << BOLD_GREEN << "Focus here first" << RESET << std::endl;
-
 	int left = 0;
 	int right = updatedMain.size() - 1;
 	int mid = (left + right) / 2;
@@ -173,17 +170,10 @@ std::vector<int> insertNumIntoMain(std::vector<int> updatedMain, int num)
 			mid = (left + right) / 2;
 		}
 		else if (num == updatedMain[mid])
-		{
 			index = mid + 1;
-			std::cout <<  BOLD_RED << "index here might be wrong" << index << RESET << std::endl;
-		}
 	}
 	index = mid + 1;
-	std::cout << "Num: " << num << std::endl;
-	std::cout << "Index: " << index << std::endl;
 	updatedMain.insert(updatedMain.begin() + index, num);
-	printVector(updatedMain);
-	std::cout << std::endl << BOLD_GREEN << "End Focus here first" << RESET << std::endl;
 	return (updatedMain);
 }
 
@@ -199,38 +189,17 @@ std::vector<int>	insertionSort(std::vector<int> originalMain, std::vector<int> p
 	int k = 0;
 	
 	updatedMain.insert(updatedMain.begin(), pend[0]);
-	std::cout << BOLD_CYAN << "Ori main: " << RESET;
-	printVector(originalMain);
-	std::cout << BOLD_CYAN << "Updated main: " << RESET;
-	printVector(updatedMain);
-	std::cout << BOLD_CYAN << "Pend: " << RESET;
-	printVector(pend);
-	std::cout << BOLD_RED << "Pend size: " << pend.size() << RESET << std::endl;
-	std::cout << std::endl << "Jacob number: ";
-	printVector(jacobIndex);
 	while (i < jacobVectorSize)
 	{
-		std::cout << std::endl << "Jacobindex[i]: " << jacobIndex[i] << std::endl;
-		std::cout << "i: " << i << std::endl;
-		std::cout << "pend num " << pend[jacobIndex[i] - 1] << std::endl;
 		updatedMain = insertNumIntoMain(updatedMain, pend[jacobIndex[i] - 1]);
 		j = jacobIndex[i - 1];
-		std::cout << "j: " << j << std::endl;
 		k = jacobIndex[i];
 		k--;
 		while (k > j)
 		{
-			std::cout << "k: " << k << std::endl;
-			std::cout << "pend[k]: " << pend[k - 1] << std::endl;
 			updatedMain = insertNumIntoMain(updatedMain, pend[k - 1]);
 			k--;
 		}
-		std::cout << BOLD_CYAN << "Ori main: " << RESET;
-		printVector(originalMain);
-		std::cout << BOLD_CYAN << "Updated main: " << RESET;
-		printVector(updatedMain);
-		std::cout << BOLD_CYAN << "Pend: " << RESET;
-		printVector(pend);
 		i++;
 	}
 	// sortPendElementAfterLastJacobNum();
@@ -244,7 +213,6 @@ std::vector<int>	insertionSort(std::vector<int> originalMain, std::vector<int> p
 			z--;
 		}
 	}
-	std::cout << "Before the end of insertion sort" << std::endl;
 	return (updatedMain);
 }
 
@@ -258,7 +226,7 @@ int	checkIfSorted(std::vector<int> initialData)
 	{
 		if (initialData[i] > initialData[i + 1])
 		{
-			std::cout << BOLD_RED << "Error: Not sorted" << RESET << std::endl;
+			// std::cout << BOLD_RED << "Error: Not sorted" << RESET << std::endl;
 			return (1);
 		}
 		i++;
@@ -287,43 +255,44 @@ void	stepThreeCreateMainAndPend(std::vector<int> initialData, int numberOfElemen
 		pend.push_back(*(it - 1));
 	}
 	jacobIndex = getJacobsthalNumbers(pend);
-	printVector(main);
-	printVector(pend);
 	int x = checkIfSorted(main);
 	if (x == 1)
 	{
 		std::cout << BOLD_RED << "Fatal error: Main is unsorted" << RESET << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	std::cout << std::endl << "step 4: insertion sort" << std::endl;
 	main = insertionSort(main, pend, jacobIndex);
+	//last step- the left out odd num
+	if (numberOfElement % 2 != 0)
+	{
+		int oddLastElement = initialData[numberOfElement - 1];
+		main = insertNumIntoMain(main, oddLastElement);
+	}
+	std::cout << "After: \t";
+	printVector(main);
+	checkIfSorted(main);
 }
 
-void	sortOddNumber(void)
+std::chrono::microseconds	mergeInsertionSort(int ac, char **av)
 {
-}
+	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 
-void	mergeInsertionSort(int ac, char **av)
-{
 	std::vector<int> initialData;
 	initialData = parseIntoVector(ac, av, initialData);
 	int numberOfElement = ac - 1;
 	initialData = stepOnesplitIntoTwoPairs(initialData, numberOfElement);
-	std::cout << "step 1: sort each pair" << std::endl;
-	printVector(initialData);
-	std::cout << std::endl << "step 2: compare the 2nd element for each pair" << std::endl;
 	initialData = stepTwocompareSecondElement(initialData, numberOfElement);
-	printVector(initialData);
 	int x = checkIfSorted(initialData);
 	if (x == 2)
-		return ;
-	std::cout << std::endl << "step 3: create main and pend" << std::endl;
-	stepThreeCreateMainAndPend(initialData, numberOfElement);
-	//last step- the left out odd num
-	if (numberOfElement % 2 != 0)
 	{
-		int lastElement = initialData[numberOfElement - 1];
-		std::cout << "lastElement: " << lastElement << std::endl;
-		sortOddNumber();
+		std::cout << "After: ";
+		printVector(initialData);
+		std::chrono::steady_clock::time_point end_time = std::chrono::steady_clock::now();
+		std::chrono::microseconds duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - startTime);
+		return (duration);
 	}
+	stepThreeCreateMainAndPend(initialData, numberOfElement);
+	std::chrono::steady_clock::time_point end_time = std::chrono::steady_clock::now();
+	std::chrono::microseconds duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - startTime);
+	return (duration);
 }
