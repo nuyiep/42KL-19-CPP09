@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/04 14:42:45 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/05 16:52:17 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,19 +146,54 @@ std::vector<int> getJacobsthalNumbers(std::vector<int> pend)
 	return (jacobIndex);
 }
 
+std::vector<int> insertNumIntoMain(std::vector<int> updatedMain, int num)
+{
+	std::cout << std::endl << BOLD_GREEN << "Focus here first" << RESET << std::endl;
+
+	int left = 0;
+	int right = updatedMain.size() - 1;
+	int mid = (left + right) / 2;
+	int index = -1;
+
+	while (left <= right)
+	{
+		if (num < updatedMain[mid])
+		{
+			right = mid - 1;
+			mid = (left + right) / 2;
+		}
+		else if (num > updatedMain[mid])
+		{
+			left = mid + 1;
+			mid = (left + right) / 2;
+		}
+		else if (num == updatedMain[mid])
+			index = mid + 1;
+	}
+	index = mid + 1;
+	
+	updatedMain.insert(updatedMain.begin() + index, num);
+	printVector(updatedMain);
+	std::cout << std::endl << BOLD_GREEN << "End Focus here first" << RESET << std::endl;
+	return (updatedMain);
+}
+
 /* insert b1 before a1 first */
 /* Insertion sort using Jacobsthal number */
-std::vector<int>	insertionSort(std::vector<int> main, std::vector<int> pend, std::vector<int> jacobIndex)
+/* deep copy using copy constructor */
+std::vector<int>	insertionSort(std::vector<int> originalMain, std::vector<int> pend, std::vector<int> jacobIndex)
 {
+	std::vector<int> updatedMain(originalMain); //deep copy
 	int i = 1;
-	// int pendLength = pend.size();
 	int jacobVectorSize = jacobIndex.size();
-	int num = 0;
-	// int insertNum = -1;
+	int j = 1;
+	int k = 0;
 	
-	main.insert(main.begin(), pend[0]);
-	std::cout << BOLD_CYAN << "Main: " << RESET;
-	printVector(main);
+	updatedMain.insert(updatedMain.begin(), pend[0]);
+	std::cout << BOLD_CYAN << "Ori main: " << RESET;
+	printVector(originalMain);
+	std::cout << BOLD_CYAN << "Updated main: " << RESET;
+	printVector(updatedMain);
 	std::cout << BOLD_CYAN << "Pend: " << RESET;
 	printVector(pend);
 	std::cout << std::endl << "Jacob number: ";
@@ -168,14 +203,27 @@ std::vector<int>	insertionSort(std::vector<int> main, std::vector<int> pend, std
 		std::cout << std::endl << "Jacobindex[i]: " << jacobIndex[i] << std::endl;
 		std::cout << "i: " << i << std::endl;
 		std::cout << "pend num " << pend[jacobIndex[i] - 1] << std::endl;
-		main.insert(main.begin() + jacobIndex[i] + num, pend[jacobIndex[i] - 1]);
-		std::cout << BOLD_CYAN << "Main: " << RESET;
-		printVector(main);
+		updatedMain = insertNumIntoMain(updatedMain, pend[jacobIndex[i] - 1]);
+		j = jacobIndex[i - 1];
+		std::cout << "j: " << j << std::endl;
+		k = jacobIndex[i];
+		k--;
+		while (k > j)
+		{
+			std::cout << "k: " << k << std::endl;
+			std::cout << "pend[k]: " << pend[k - 1] << std::endl;
+			k--;
+		}
+		std::cout << BOLD_CYAN << "Ori main: " << RESET;
+		printVector(originalMain);
+		std::cout << BOLD_CYAN << "Updated main: " << RESET;
+		printVector(updatedMain);
+		std::cout << BOLD_CYAN << "Pend: " << RESET;
+		printVector(pend);
 		i++;
-		num++;
 	}
 	std::cout << "Before the end of insertion sort" << std::endl;
-	return (main);
+	return (updatedMain);
 }
 
 /* Use for debugging purposes */
