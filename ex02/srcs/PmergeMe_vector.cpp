@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/06 14:49:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/06 17:27:00 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,14 +303,14 @@ void	stepThreeCreateMainAndPend(std::vector<int> initialData, int numberOfElemen
 
 std::chrono::microseconds	mergeInsertionSortVec(int ac, char **av)
 {
-	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
-
 	std::vector<int> initialData;
 	initialData = parseIntoVector(ac, av, initialData);
 	int numberOfElement = ac - 1;
 	initialData = stepOnesplitIntoTwoPairs(initialData, numberOfElement);
 	initialData = stepTwocompareSecondElement(initialData, numberOfElement);
 	int x = checkIfSorted(initialData);
+	
+	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 	if (x == 2)
 	{
 		std::cout << BOLD_MAGENTA << "After:\t\t";
