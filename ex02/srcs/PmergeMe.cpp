@@ -6,12 +6,37 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/05 19:17:57 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/06 12:22:08 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
+void	check_duplicates(int ac, char **av)
+{
+	int i = 1;
+	int j = 1;
+	int count = 0;
+
+	while (i < ac)
+	{
+		j = 1;
+		while (j < ac)
+		{
+			if (i != j && std::strcmp(av[i], av[j]) == 0)
+				count++;
+			j++;
+		}
+		i++;
+	}
+	if (count != 0)
+	{
+		std::cout << "Cannot have duplicate numbers" << std::endl;
+		exit (EXIT_FAILURE);
+	}
+}
+
+/* If there is negative integer- will error */
 void	printBeforeAndErrorChecking(int ac, char **av)
 {
 	int i = 1;
@@ -24,8 +49,8 @@ void	printBeforeAndErrorChecking(int ac, char **av)
 		}
 		i++;
 	}
+	check_duplicates(ac, av);
 	std::cout << "Before: ";
-	
 	i = 1;
 	while (i < ac)
 	{
