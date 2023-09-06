@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
+/*   PmergeMe_vector.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/06 12:22:08 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/06 14:49:36 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
+/*************************** Error checking ***************************/
 void	check_duplicates(int ac, char **av)
 {
 	int i = 1;
@@ -31,7 +32,7 @@ void	check_duplicates(int ac, char **av)
 	}
 	if (count != 0)
 	{
-		std::cout << "Cannot have duplicate numbers" << std::endl;
+		std::cout << BOLD_RED << "Cannot have duplicate numbers" << RESET << std::endl;
 		exit (EXIT_FAILURE);
 	}
 }
@@ -50,16 +51,17 @@ void	printBeforeAndErrorChecking(int ac, char **av)
 		i++;
 	}
 	check_duplicates(ac, av);
-	std::cout << "Before: ";
+	std::cout << BOLD_GREEN << "Before:\t\t";
 	i = 1;
 	while (i < ac)
 	{
-		std::cout << av[i] << ' ';
+		std::cout << BOLD_GREEN << av[i] << ' ';
 		i++;
 	}
-	std::cout << std::endl;
+	std::cout << RESET << std::endl;
 }
 
+/*************************** Utility (Vector) ***************************/
 void	printVector(std::vector<int> Data)
 {
 	std::vector<int>::iterator it = Data.begin();
@@ -73,6 +75,7 @@ void	printVector(std::vector<int> Data)
 	}
 	std::cout << RESET << std::endl;
 }
+
 
 std::vector<int>	parseIntoVector(int ac, char **av, std::vector<int> initialData)
 {
@@ -293,12 +296,12 @@ void	stepThreeCreateMainAndPend(std::vector<int> initialData, int numberOfElemen
 		int oddLastElement = initialData[numberOfElement - 1];
 		main = insertNumIntoMain(main, oddLastElement);
 	}
-	std::cout << "After: \t";
+	std::cout << BOLD_MAGENTA << "After  (Vect): \t";
 	printVector(main);
 	checkIfSorted(main);
 }
 
-std::chrono::microseconds	mergeInsertionSort(int ac, char **av)
+std::chrono::microseconds	mergeInsertionSortVec(int ac, char **av)
 {
 	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 
@@ -310,7 +313,7 @@ std::chrono::microseconds	mergeInsertionSort(int ac, char **av)
 	int x = checkIfSorted(initialData);
 	if (x == 2)
 	{
-		std::cout << "After: ";
+		std::cout << BOLD_MAGENTA << "After:\t\t";
 		printVector(initialData);
 		std::chrono::steady_clock::time_point end_time = std::chrono::steady_clock::now();
 		std::chrono::microseconds duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - startTime);

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:40 by plau              #+#    #+#             */
-/*   Updated: 2023/09/06 12:19:45 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/06 13:27:49 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 #include <algorithm>
 #include <chrono> //time
 #include <cstring> //strcmp
+#include <deque>
 
 void							printBeforeAndErrorChecking(int ac, char **av);
-std::chrono::microseconds		mergeInsertionSort(int ac, char **av);
-int								checkIfSorted(std::vector<int> initialData);
+std::chrono::microseconds		mergeInsertionSortVec(int ac, char **av);
+std::chrono::microseconds		mergeInsertionSortDeque(int ac, char **av);
 
 #endif
