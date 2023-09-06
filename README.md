@@ -28,6 +28,9 @@ A B + :		postfix notation/Reverse Polish Notation
 - 2 * -1 
 - Answer: -2
 
+**Ex02**
+	Use vector and deque
+
 **Ex02- Ford-Johnson algorithm/merge insertion sort**
 1. 	Split the collection in n/2 pairs of 2 elements and order these elements pairwise
 	If the number of elements is odd, the last element of the collection isn't paired with any element
@@ -47,4 +50,4 @@ A B + :		postfix notation/Reverse Polish Notation
 	5 + (3x2) = 11
 	11 + (5x2) = 21
 
-	
+`python -c "import random; print(' '.join(map(str, random.sample(range(1, 100000), 3000))))"`
