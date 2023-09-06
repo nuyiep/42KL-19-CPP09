@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/06 17:29:47 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/06 21:14:05 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,6 +308,7 @@ std::chrono::microseconds	mergeInsertionSortVec(int ac, char **av)
 	std::vector<int> initialData;
 	initialData = parseIntoVector(ac, av, initialData);
 	int numberOfElement = ac - 1;
+
 	initialData = stepOnesplitIntoTwoPairs(initialData, numberOfElement);
 	initialData = stepTwocompareSecondElement(initialData, numberOfElement);
 	int x = checkIfSorted(initialData);

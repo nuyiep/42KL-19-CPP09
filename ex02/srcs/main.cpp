@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:16 by plau              #+#    #+#             */
-/*   Updated: 2023/09/06 14:47:44 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/06 21:11:51 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(int ac, char **av)
 	printBeforeAndErrorChecking(ac, av);
 	processingTimeVec = mergeInsertionSortVec(ac, av);
 	processingTimeDeque = mergeInsertionSortDeque(ac, av);
-	std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector : " << processingTimeVec.count() << " microseconds" << std::endl; 
+	std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector: " << processingTimeVec.count() << " microseconds" << std::endl; 
 	std::cout << "Time to process a range of " << ac - 1 << " elements with std::deque : " << processingTimeDeque.count() << " microseconds" << std::endl; 
 	return (0);
 }
