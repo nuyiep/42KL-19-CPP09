@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 13:20:01 by plau              #+#    #+#             */
-/*   Updated: 2023/09/06 17:28:35 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/06 17:29:59 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,14 +252,14 @@ void	stepThreeCreateMainAndPend(std::deque<int> initialData, int numberOfElement
 
 std::chrono::microseconds	mergeInsertionSortDeque(int ac, char **av)
 {
+	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
+	
 	std::deque<int> initialData;
 	initialData = parseIntoDeque(ac, av, initialData);
 	int numberOfElement = ac - 1;
 	initialData = stepOnesplitIntoTwoPairs(initialData, numberOfElement);
 	initialData = stepTwocompareSecondElement(initialData, numberOfElement);
 	int x = checkIfSorted(initialData);
-	
-	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 	if (x == 2)
 	{
 		std::cout << BOLD_MAGENTA << "After:\t\t";
