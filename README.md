@@ -20,8 +20,8 @@ A B + :		postfix notation/Reverse Polish Notation
 - 2 * 4 = 8 then delete 2 and 4 from stack
 - store 8 into stack  
 - stack: 8
-- 8 * 6 = 48
-- Answer: 48 
+- 8 + 6 = 14
+- Answer: 14 
 
 2 3 4 - *
 - 3 - 4 = -1
