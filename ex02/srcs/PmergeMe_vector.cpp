@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/07 11:35:10 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/07 15:05:02 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,28 +126,48 @@ void	compareSecondElementRecursive(std::vector<int>::iterator it, std::vector<in
 		compareSecondElementRecursive(it + 2, ite);
 }
 
-std::vector<int>	stepTwocompareSecondElement(std::vector<int> Data, int numberOfElement)
+int	partition(std::vector<int> &data, int low, int high)
 {
-	std::vector<int>::iterator it;
-	std::vector<int>::iterator ite;
+	int	pivot_value;
+	int	i;
+	int	j;
 
-	ite = Data.end();
-	if (numberOfElement % 2 == 0)
-		ite = Data.end() - 1;
-	else
-		ite = Data.end() - 2;
-	for (it = Data.begin() + 1; it != ite; it += 2)
+	pivot_value = data[high];
+	i = low;
+	j = low;
+	while (j < high)
 	{
-		if (*it > *(it + 2))
+		if (data[j] <= pivot_value)
 		{
-			// std::cout << *it << ' ';
-			// std::cout << *(it + 2) << ' ';
-			std::swap(*it, *(it + 2));
-			std::swap(*(it - 1), *(it + 1));
-			// printVector(Data);
-			it = Data.begin() + 1 - 2;
+			std::swap(data[i], data[j]);
+			i++;
 		}
+		j++;
 	}
+	std::swap(data[i], data[high]);
+	return (i);
+}
+
+void	quicksort_recursion(std::vector<int> &data, int low, int high)
+{
+	int	pivot_index;
+
+	if (low < high)
+	{
+		pivot_index = partition(data, low, high);
+		quicksort_recursion(data, low, pivot_index - 1);
+		quicksort_recursion(data, pivot_index + 1, high);
+	}
+}
+
+void	quicksort(std::vector<int> &data)
+{
+	quicksort_recursion(data, 0, data.size() - 1);
+}
+
+std::vector<int>	stepTwocompareSecondElement(std::vector<int> Data)
+{
+	quicksort(Data);
 	return (Data);
 }
 
@@ -310,7 +330,7 @@ std::chrono::microseconds	mergeInsertionSortVec(int ac, char **av)
 	int numberOfElement = ac - 1;
 
 	initialData = stepOnesplitIntoTwoPairs(initialData, numberOfElement);
-	initialData = stepTwocompareSecondElement(initialData, numberOfElement);
+	initialData = stepTwocompareSecondElement(initialData);
 	int x = checkIfSorted(initialData);
 	if (x == 2)
 	{
