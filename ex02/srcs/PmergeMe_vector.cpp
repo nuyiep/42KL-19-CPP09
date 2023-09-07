@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/06 21:14:05 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/07 11:35:10 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,7 +314,7 @@ std::chrono::microseconds	mergeInsertionSortVec(int ac, char **av)
 	int x = checkIfSorted(initialData);
 	if (x == 2)
 	{
-		std::cout << BOLD_MAGENTA << "After:\t\t";
+		std::cout << BOLD_MAGENTA << "After  (Vect): \t";
 		printVector(initialData);
 		std::chrono::steady_clock::time_point end_time = std::chrono::steady_clock::now();
 		std::chrono::microseconds duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - startTime);

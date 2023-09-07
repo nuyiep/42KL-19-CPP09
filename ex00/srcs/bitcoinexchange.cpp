@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:55:36 by plau              #+#    #+#             */
-/*   Updated: 2023/09/06 18:49:51 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/07 11:58:44 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ std::map<std::string, double>	parseLine(void)
 	std::map<std::string, double> dataMap;
 	std::string line;
 	std::getline(inputFile, line);
+	if (line.size() == 0)
+	{
+		std::cout << BOLD_MAGENTA << "Error" << line << std::endl;
+		exit (EXIT_FAILURE);
+	}
 	while (std::getline(inputFile, line))
 	{
 		// std::cout << BOLD_GREEN << line << RESET << std::endl;
@@ -36,6 +41,12 @@ std::map<std::string, double>	parseLine(void)
 			std::cerr << RED << "Error: bad input => " << line << RESET << std::endl;
 	}
 	inputFile.close();
+	int size = dataMap.size();
+	if (size == 0)
+	{
+		std::cout << BOLD_MAGENTA << "Error: table is empty" << std::endl;
+		exit (EXIT_FAILURE);
+	}
 	return(dataMap);
 }
 
@@ -74,6 +85,8 @@ int checkForValidDate(int year, int month, int day)
 	// 	std::cout << "Not a leap year" << std::endl;
 	int maxDayForEachMonth[12] = {31, februaryDay, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	if (day > maxDayForEachMonth[month - 1] || day < 1)
+		return (1);
+	if (month > 12 || month < 1)
 		return (1);
 	return (0);
 }
