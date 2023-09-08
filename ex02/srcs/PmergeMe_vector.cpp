@@ -6,36 +6,11 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:19:31 by plau              #+#    #+#             */
-/*   Updated: 2023/09/07 15:05:02 by plau             ###   ########.fr       */
+/*   Updated: 2023/09/08 13:48:44 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
-
-/*************************** Error checking ***************************/
-void	check_duplicates(int ac, char **av)
-{
-	int i = 1;
-	int j = 1;
-	int count = 0;
-
-	while (i < ac)
-	{
-		j = 1;
-		while (j < ac)
-		{
-			if (i != j && std::strcmp(av[i], av[j]) == 0)
-				count++;
-			j++;
-		}
-		i++;
-	}
-	if (count != 0)
-	{
-		std::cout << BOLD_RED << "Cannot have duplicate numbers" << RESET << std::endl;
-		exit (EXIT_FAILURE);
-	}
-}
 
 /* If there is negative integer- will error */
 void	printBeforeAndErrorChecking(int ac, char **av)
@@ -50,7 +25,6 @@ void	printBeforeAndErrorChecking(int ac, char **av)
 		}
 		i++;
 	}
-	check_duplicates(ac, av);
 	std::cout << BOLD_GREEN << "Before:\t\t";
 	i = 1;
 	while (i < ac)
@@ -77,12 +51,10 @@ void	printVector(std::vector<int> Data)
 }
 
 
-std::vector<int>	parseIntoVector(int ac, char **av, std::vector<int> initialData)
+void	parseIntoVector(int ac, char **av, std::vector<int> &initialData)
 {
 	for (int i = 1; i < ac; i ++)
 		initialData.push_back(atoi(av[i]));
-	
-	return(initialData);
 }
 
 void	splitPairsRecursive(std::vector<int>::iterator it, std::vector<int>::iterator ite)
@@ -94,7 +66,7 @@ void	splitPairsRecursive(std::vector<int>::iterator it, std::vector<int>::iterat
 	splitPairsRecursive(it + 2, ite);
 }
 
-std::vector<int>	stepOnesplitIntoTwoPairs(std::vector<int> Data, int numberOfElement)
+void	stepOnesplitIntoTwoPairs(std::vector<int> &Data, int numberOfElement)
 {
 	std::vector<int>::iterator it;
 	std::vector<int>::iterator ite;
@@ -109,7 +81,6 @@ std::vector<int>	stepOnesplitIntoTwoPairs(std::vector<int> Data, int numberOfEle
 	// 	if (*it > *(it + 1))
 	// 		std::swap(*it, *(it + 1));
 	// }
-	return (Data);
 }
 
 void	compareSecondElementRecursive(std::vector<int>::iterator it, std::vector<int>::iterator ite)
@@ -165,10 +136,9 @@ void	quicksort(std::vector<int> &data)
 	quicksort_recursion(data, 0, data.size() - 1);
 }
 
-std::vector<int>	stepTwocompareSecondElement(std::vector<int> Data)
+void	stepTwocompareSecondElement(std::vector<int> &Data)
 {
 	quicksort(Data);
-	return (Data);
 }
 
 /* Generate the jacob number based on the size of the pend */
@@ -218,7 +188,7 @@ std::vector<int> insertNumIntoMain(std::vector<int> updatedMain, int num)
 			mid = (left + right) / 2;
 		}
 		else if (num == updatedMain[mid])
-			index = mid + 1;
+			break ;
 	}
 	index = mid + 1;
 	updatedMain.insert(updatedMain.begin() + index, num);
@@ -285,7 +255,7 @@ int	checkIfSorted(std::vector<int> initialData)
 /* Step 3 create main chain and pend */
 /* main chain: a1 a2 a3 - sorted */
 /* pend: 	   b1, b2, b3 - unsorted */
-void	stepThreeCreateMainAndPend(std::vector<int> initialData, int numberOfElement)
+void	stepThreeCreateMainAndPend(std::vector<int> &initialData, int numberOfElement)
 {
 	std::vector<int> main;
 	std::vector<int> pend;
@@ -326,11 +296,11 @@ std::chrono::microseconds	mergeInsertionSortVec(int ac, char **av)
 	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 	
 	std::vector<int> initialData;
-	initialData = parseIntoVector(ac, av, initialData);
+	parseIntoVector(ac, av, initialData);
 	int numberOfElement = ac - 1;
 
-	initialData = stepOnesplitIntoTwoPairs(initialData, numberOfElement);
-	initialData = stepTwocompareSecondElement(initialData);
+	stepOnesplitIntoTwoPairs(initialData, numberOfElement);
+	stepTwocompareSecondElement(initialData);
 	int x = checkIfSorted(initialData);
 	if (x == 2)
 	{
