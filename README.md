@@ -54,5 +54,7 @@ A B + :		postfix notation/Reverse Polish Notation
 	5 + (3x2) = 11
 	11 + (5x2) = 21
 
+**Ex02- Please do not refer to my ex02- they are not up-to-date :)**
+
 `python -c "import random; print(' '.join(map(str, random.sample(range(1, 100000), 3000))))"`
 
